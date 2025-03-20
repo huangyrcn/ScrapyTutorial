@@ -16,3 +16,5 @@ class NewsItem(scrapy.Item):
     created_at = scrapy.Field()     # 爬取时间
     response = scrapy.Field()       # 响应对象
     html_saved_path = scrapy.Field()  # 保存HTML文件路径
+
+    
