@@ -1,0 +1,11 @@
+# 忽略所有 .log 文件
+*.log
+
+# 忽略特定目录
+html_files/
+
+__pycache__/
+
+# 忽略所有以 news. 开头的文件
+news.*
+
