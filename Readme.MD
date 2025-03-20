@@ -19,14 +19,8 @@
   - 示例代码讲解
   - 运行方法及注意事项
 
-## 📂 访问方式
-
-请在项目根目录下，按照以下相对路径查阅文档：
-
-```bash
-./Envorimentsetup.md
-./ScrapyTutorial.md
-```
+## 📂 使用方式
 
 如需运行爬虫或查看详细信息，请先阅读 [`Envorimentsetup.md`](./Envorimentsetup.md) 配置环境，然后参考 [`ScrapyTutorial.md`](./ScrapyTutorial.md) 进行操作。
 
+注意，按照ScrapyTutorial.md操作不会覆盖 Tutorial 文件夹，其会新创建一个文件夹和新的项目。
