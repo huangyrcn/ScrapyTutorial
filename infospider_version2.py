@@ -1,4 +1,5 @@
 import scrapy
+import urljoin
 
 
 class InfospiderSpider(scrapy.Spider):
@@ -14,10 +15,10 @@ class InfospiderSpider(scrapy.Spider):
         # 处理所有目标项
         for item in response.css("a.font06"):
             link = item.css("::attr(href)").get()
-
-            # 处理相对路径 (如果链接是相对路径)
-            if link and link.startswith("./"):
-                link = link[2:]  # 移除开头的 './'
+            detail_url = (
+                    link if link.startswith("http") else urljoin(response.url, link)
+                )
+            yield scrapy.Request(detail_url, callback=self.parse_detail)
 
     def parse_detail(self, response):
         """解析每个新闻详情页的内容"""
