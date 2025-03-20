@@ -1,4 +1,4 @@
-# Scrapy settings for tutorial project
+# Scrapy settings for newscraper project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,14 +7,20 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "tutorial"
+BOT_NAME = "newscraper"
 
-SPIDER_MODULES = ["tutorial.spiders"]
-NEWSPIDER_MODULE = "tutorial.spiders"
+SPIDER_MODULES = ["newscraper.spiders"]
+NEWSPIDER_MODULE = "newscraper.spiders"
 
+ITEM_PIPELINES = {
+   'newscraper.pipelines.NewsPipeline': 300,      # 数据清洗管道
+   'newscraper.pipelines.HtmlSavePipeline': 10,   # HTML保存管道
+   'newscraper.pipelines.ExcelPipeline': 500,     # Excel导出管道
+   'newscraper.pipelines.SQLitePipeline': 800,    # 数据库存储管道
+}
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = "tutorial (+http://www.yourdomain.com)"
+#USER_AGENT = "newscraper (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -45,15 +51,14 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    "tutorial.middlewares.TutorialSpiderMiddleware": 543,
+#    "newscraper.middlewares.NewscraperSpiderMiddleware": 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    "tutorial.middlewares.TutorialDownloaderMiddleware": 543,
+#    "newscraper.middlewares.NewscraperDownloaderMiddleware": 543,
 #}
-# settings.py
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
@@ -63,13 +68,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'tutorial.pipelines.NewsPipeline': 300,  # 先清洗数据
-   'tutorial.pipelines.HtmlSavePipeline': 10,  # 然后保存 HTML
-   'tutorial.pipelines.ExcelPipeline': 500,
-   'tutorial.pipelines.SQLitePipeline': 800, # 然后存储数据
-}
-
+#ITEM_PIPELINES = {
+#    "newscraper.pipelines.NewscraperPipeline": 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -95,4 +96,3 @@ ITEM_PIPELINES = {
 # Set settings whose default value is deprecated to a future-proof value
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
-

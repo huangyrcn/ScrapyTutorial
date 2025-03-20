@@ -6,7 +6,7 @@ html_files/
 
 __pycache__/
 
-newscraper/
+
 
 # 忽略所有以 news. 开头的文件
 news.*

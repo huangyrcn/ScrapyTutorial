@@ -6,15 +6,6 @@
 import scrapy
 
 
-class TutorialItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
-
-class InfospiderItem(scrapy.Item):
-    link = scrapy.Field()
-    pass
-
 
 class NewsItem(scrapy.Item):
     """定义新闻文章的数据结构"""
