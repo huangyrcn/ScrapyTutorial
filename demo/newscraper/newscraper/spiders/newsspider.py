@@ -1,20 +1,16 @@
+
 import scrapy
 from newscraper.items import NewsItem
-from scrapy.spiders import CrawlSpider, Rule
-from scrapy.linkextractors import LinkExtractor
 from urllib.parse import urljoin
 
 
 class newsspider(scrapy.Spider):
     name = "newsspider"
     allowed_domains = ["cas.cn"]
-    start_urls = ["http://www.ciomp.cas.cn/xwdt"] 
-    rules = (
-        # 提取所有相对链接并跟进
-        Rule(LinkExtractor(), callback='parse_item', follow=True),
-        # 提取所有属于该域名的链接并跟进
-        Rule(LinkExtractor(allow_domains=allowed_domains), callback='parse_item', follow=True),
-    )
+    start_urls = ["http://www.ciomp.cas.cn/xwdt/zhxw/"] + [
+        f"http://www.ciomp.cas.cn/xwdt/zhxw/index_{i}.html" for i in range(1, 38)
+    ]
+
     def start_requests(self):
         for url in self.start_urls:
             yield scrapy.Request(url, callback=self.parse)

@@ -68,6 +68,7 @@ Scrapy 项目有一个标准化的目录结构，便于代码组织和维护。�
 ## 创建特定爬虫
 
 ```bash
+cd newscraper
 scrapy genspider newsspider http://www.ciomp.cas.cn/xwdt/zhxw/
 ```
 
@@ -370,7 +371,7 @@ class NewsspiderSpider(scrapy.Spider):
 scrapy crawl newsspider
 ```
 
-### 结构化数据处理
+## 结构化数据处理
 
 scrapy 提供了一种机制让我们不必把所有操作都放在爬虫中，而是可以把任务分散到管道中。这需要通过定义 Scrapy Items 实现。
 
@@ -381,6 +382,8 @@ Scrapy Items 是一种预定义的数据结构，用于保存数据。
 下面是我们定义的 items 和修改后的 parse_detail：
 
 ```python
+import scrapy
+
 class NewsItem(scrapy.Item):
     """定义新闻文章的数据结构"""
     title = scrapy.Field()          # 新闻标题
@@ -388,6 +391,10 @@ class NewsItem(scrapy.Item):
     author = scrapy.Field()         # 作者/来源
     url = scrapy.Field()            # 文章URL
     created_at = scrapy.Field()     # 爬取时间
+    response = scrapy.Field()       # 响应对象
+    html_saved_path = scrapy.Field()  # 保存HTML文件路径
+
+    
 ```
 
 下面是我们完整的 newsspider.py
@@ -679,11 +686,12 @@ class HtmlSavePipeline:
 
 ```python
 # settings.py 中的管道配置示例
+
 ITEM_PIPELINES = {
-   'tutorial.pipelines.NewsPipeline': 300,      # 数据清洗管道
-   'tutorial.pipelines.HtmlSavePipeline': 10,   # HTML保存管道
-   'tutorial.pipelines.ExcelPipeline': 500,     # Excel导出管道
-   'tutorial.pipelines.SQLitePipeline': 800,    # 数据库存储管道
+   'newscraper.pipelines.NewsPipeline': 300,      # 数据清洗管道
+   'newscraper.pipelines.HtmlSavePipeline': 10,   # HTML保存管道
+   'newscraper.pipelines.ExcelPipeline': 500,     # Excel导出管道
+   'newscraper.pipelines.SQLitePipeline': 800,    # 数据库存储管道
 }
 ```
 
